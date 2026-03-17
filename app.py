@@ -12,8 +12,15 @@ st.set_page_config(page_title="Procesador de libros Notariales", page_icon="📝
 st.title("📝 Procesador de Fotos: Libros Notariales")
 st.markdown("Esta aplicación extrae el texto de las fotos de los libros notariales (ignorando sellos) y genera un archivo Word formateado.")
 
-# Solicitar API Key de Gemini
-api_key = st.text_input("Ingresa tu clave de API de Google Gemini:", type="password", help="Obtén tu API key en https://aistudio.google.com/app/apikey")
+# Intentar obtener la API Key de los secretos de Streamlit primero
+api_key = st.secrets.get("GEMINI_API_KEY", "")
+
+# Si no está configurada en la nube o se está corriendo en local sin secrets, la pedimos manual
+if not api_key:
+    api_key = st.text_input("Ingresa tu clave de API de Google Gemini:", type="password", help="Obtén tu API key en https://aistudio.google.com/app/apikey")
+else:
+    # Mostramos un pequeño mensaje de confirmación sin revelar la clave
+    st.success("✅ Clave API detectada automáticamente por el sistema.")
 
 uploaded_file = st.file_uploader("Sube una foto del libro notarial (PNG, JPG)", type=["png", "jpg", "jpeg"])
 
