@@ -170,6 +170,8 @@ if uploaded_file is not None:
                     mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                     use_container_width=True
                 )
+                
+                st.info("💡 **Tip para iPhone:** Al tocar Descargar, Safari te preguntará si deseas descargar el archivo. Acéptalo, y luego toca el ícono de **Compartir** (el cuadrito con la flecha hacia arriba) o la lupa azul en la barra del navegador para enviarlo rápido por WhatsApp o Correo.")
             
             with col2:
                 # El botón de RESET o Vaciar caché solicitado por el usuario
