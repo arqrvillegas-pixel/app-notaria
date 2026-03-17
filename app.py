@@ -22,10 +22,21 @@ else:
     # Mostramos un pequeño mensaje de confirmación sin revelar la clave
     st.success("✅ Clave API detectada automáticamente por el sistema.")
 
-uploaded_file = st.file_uploader("Sube una foto del libro notarial (PNG, JPG)", type=["png", "jpg", "jpeg"])
+tab1, tab2 = st.tabs(["📁 Subir foto de la galería", "📸 Tomar foto (Recomendado)"])
+
+with tab1:
+    uploaded_file_upload = st.file_uploader("Sube una foto del libro notarial (PNG, JPG)", type=["png", "jpg", "jpeg"])
+
+with tab2:
+    uploaded_file_camera = st.camera_input("Toma la foto directamente aquí")
+
+# Dar prioridad a la foto tomada con la cámara si existen ambas
+uploaded_file = uploaded_file_camera if uploaded_file_camera is not None else uploaded_file_upload
 
 if uploaded_file is not None:
-    st.image(uploaded_file, caption="Vista previa de la imagen", use_column_width=True)
+    # Solo mostrar la imagen ampliada si se subió por archivo
+    if uploaded_file == uploaded_file_upload:
+        st.image(uploaded_file, caption="Vista previa de la imagen", use_column_width=True)
 
     if not api_key:
         st.warning("Por favor, ingresa tu clave API de Gemini para procesar la imagen.")
